@@ -3,7 +3,7 @@ const request = require('request');
 const ReconnectingWebSocket = require('reconnecting-websocket');
 
 // For testing. Change out when finished.
-var testuserid = 149918;
+var testuserid = 178871;
 
 // Startup 
 // This function grabs all of the user and channel info that could change possibly change.
@@ -58,7 +58,7 @@ function beamSocketConnect(channelID){
       // Web Socket is connected, send data using send()
       var connector = JSON.stringify({type: "method", method: "auth", arguments: [channelID], id: 1});
       ws.send(connector);
-      $("<div class='chatmessage' id='status-message'>Connection is open.</div>").appendTo(".chat .main-content");
+      $("<div class='chatmessage' id='status-message'>Connection is open.</div>").appendTo(".chat");
       console.log('Connection Opened...');
     };
 
@@ -69,6 +69,7 @@ function beamSocketConnect(channelID){
 
     ws.onclose = function(){
       // websocket is closed.
+      $("<div class='chatmessage' id='status-message'>Connection is closed... reconnecting.</div>").appendTo(".chat");
       console.log("Connection is closed...");
     };
 }
@@ -118,10 +119,7 @@ function chat(evt, subIcon){
       });
 
         // Place the completed chat message into the chat area.
-        $("<div class='chatmessage' id='"+messageID+"' style='display:none'><div class='useravatar'><img src="+userAvatar+"></div><div class='chatusername "+userroles+"'>"+username+" <div class='badge'><img src="+subIcon+"></div></div><div class='messagetext'>"+completeMessage+"</div></div>").appendTo(".chat");
-        $('#'+messageID).fadeIn('fast', function() {
-          scrollCheck();
-        });
+        chatBuilder(username, userAvatar, userroles, subIcon, messageID, completeMessage);
 
     } else if (eventType == "ClearMessages"){
       // If someone clears chat, then clear all messages on screen.
@@ -130,6 +128,31 @@ function chat(evt, subIcon){
       // If someone deletes a message, delete it from screen.
       $('#'+eventMessage.id).remove();
     }
+}
+
+// Chat Builder
+// This takes parts of a message, puts it together, and throws it in chat.
+function chatBuilder(username, userAvatar, userroles, subIcon, messageID, completeMessage){
+  var alternator = lastChatter(username);
+  var messageTemplate = `<div class="chatmessage ${alternator}" id="${messageID}" style="display:none">
+                            <div class="useravatar">
+                              <img src="${userAvatar}">
+                            </div>
+                            <div class="chatusername ${userroles}">
+                              ${username}
+                            </div>
+                            <div class="badge">
+                              <img src="${subIcon}">
+                            </div>
+                            <div class="messagetext">
+                              ${completeMessage}
+                            </div>
+                        </div>`
+
+  $(messageTemplate).appendTo(".chat");
+  $('#'+messageID).fadeIn('fast', function() {
+    scrollCheck();
+  });
 }
 
 // Scroller
@@ -143,9 +166,23 @@ function scrollCheck(){
     $('.chat')[0].scrollTop = $('.chat')[0].scrollHeight - $('.chat')[0].clientHeight;
 }
 
-
-
-
+// Last Chatter
+// This checks to see if the last person that sent a message is the same is different than the current message.
+function lastChatter(username){
+    var dbSettings = new JsonDB("./app-settings/settings", true, false);
+    try{
+      var lastChatter = dbSettings.getData("/lastchatter");
+    }catch(err){
+      var lastChatter = "";
+    }
+    
+    if (username !== lastChatter){
+      dbSettings.push("/lastchatter", username);
+      return "alternateChat";
+    } else {
+      return "repeatChat";
+    }
+};
 
 
 // Start Button Pressed
