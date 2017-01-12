@@ -4233,6 +4233,11 @@ select {
 }
 
 /* line 58, ../scss/_global.scss */
+.content {
+  position: relative;
+}
+
+/* line 61, ../scss/_global.scss */
 .sidr {
   background: #273b48;
   /* Old Browsers */
@@ -4246,41 +4251,93 @@ select {
   /*Standard*/
 }
 
-/* line 61, ../scss/_global.scss */
+/* line 64, ../scss/_global.scss */
 .page {
   display: none;
 }
-/* line 63, ../scss/_global.scss */
+/* line 66, ../scss/_global.scss */
 .page.current {
   display: block;
 }
-/* line 66, ../scss/_global.scss */
+/* line 68, ../scss/_global.scss */
+.page.current.chat-wrap {
+  display: flex!important;
+}
+/* line 72, ../scss/_global.scss */
 .page .main-content {
   padding: 2%;
 }
 
-/* line 10, ../scss/main.scss */
+/* line 4, ../scss/_chat-styles.scss */
+.theme-default .chatmessage {
+  padding: 0% 0% 2% 0%;
+  margin: 0% 0% 2% 0%;
+  border-bottom: 1px dotted #ffffff;
+}
+/* line 8, ../scss/_chat-styles.scss */
+.theme-default .chatmessage:last-child {
+  border-bottom: none;
+}
+/* line 11, ../scss/_chat-styles.scss */
+.theme-default .chatmessage .useravatar, .theme-default .chatmessage .chatusername, .theme-default .chatmessage .badge {
+  display: inline-block;
+}
+/* line 14, ../scss/_chat-styles.scss */
+.theme-default .chatmessage .useravatar {
+  width: 50px;
+  border-radius: 50%;
+}
+/* line 17, ../scss/_chat-styles.scss */
+.theme-default .chatmessage .useravatar img {
+  width: 100%;
+}
+
+/* line 11, ../scss/main.scss */
 .login .main-content {
   text-align: center;
 }
-/* line 13, ../scss/main.scss */
+/* line 14, ../scss/main.scss */
 .login .streamer, .login .bot {
   margin: 0% 5%;
   display: inline-block;
   vertical-align: top;
 }
-/* line 18, ../scss/main.scss */
+/* line 19, ../scss/main.scss */
 .login .streamer-avatar, .login .bot-avatar {
   border-radius: 50%;
   padding: 5px;
   border: 2px solid white;
   width: 150px;
 }
-/* line 24, ../scss/main.scss */
+/* line 25, ../scss/main.scss */
 .login .loginOrOut button {
   padding: 5%;
 }
-/* line 27, ../scss/main.scss */
+/* line 28, ../scss/main.scss */
 .login .botType {
   margin: 2% 0% 0% 0%;
+}
+
+/* line 33, ../scss/main.scss */
+.chat-wrap {
+  position: relative;
+  flex-direction: column;
+}
+/* line 36, ../scss/main.scss */
+.chat-wrap .chat {
+  height: 75vh;
+  overflow: hidden;
+  overflow-y: scroll;
+  display: flex;
+  bottom: 0;
+  right: 0;
+  flex-direction: column;
+  flex-grow: 2;
+  padding: 2%;
+}
+/* line 48, ../scss/main.scss */
+.chat-wrap .input-container textarea {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }

@@ -4,6 +4,7 @@
 @import 'font-awesome.min';
 @import 'plugins';
 @import 'global';
+@import 'chat-styles';
 
 // Login Page
 .login{
@@ -26,5 +27,28 @@
     }
     .botType{
         margin:2% 0% 0% 0%;
+    }
+}
+
+.chat-wrap{
+    position:relative;
+    flex-direction:column;
+    .chat{
+        height:75vh;
+        overflow:hidden;
+        overflow-y:scroll;
+        display:flex;
+        bottom:0;
+        right:0;
+        flex-direction:column;
+        flex-grow:2;
+        padding:2%;
+    }
+    .input-container{
+        textarea{
+            width:100%;
+            height:100%;
+            box-sizing: border-box;
+        }
     }
 }

@@ -2,6 +2,8 @@ const JsonDB = require('node-json-db');
 const request = require('request');
 const ReconnectingWebSocket = require('reconnecting-websocket');
 
+// For testing. Change out when finished.
+var testuserid = 149918;
 
 // Startup 
 // This function grabs all of the user and channel info that could change possibly change.
@@ -37,7 +39,7 @@ function startUp(){
 
     // Start up the connection
     // Send over channel ID of chat you want to connect to.
-    beamSocketConnect(34083);
+    beamSocketConnect(testuserid);
 }
 
 // CHAT
@@ -62,7 +64,7 @@ function beamSocketConnect(channelID){
 
     ws.onmessage = function (evt){
       chat(evt, subIcon);
-      console.log(evt);
+      //console.log(evt);
     };
 
     ws.onclose = function(){
@@ -79,6 +81,7 @@ function chat(evt, subIcon){
 
     if (eventType == "ChatMessage"){
       var username = eventMessage.user_name;
+      var userAvatar = "https://beam.pro/api/v1/users/"+eventMessage.user_id+"/avatar"
       var userrolesSrc = eventMessage.user_roles;
       var userroles = userrolesSrc.toString().replace(/,/g, " ");
       var usermessage = eventMessage.message.message;
@@ -115,8 +118,10 @@ function chat(evt, subIcon){
       });
 
         // Place the completed chat message into the chat area.
-        $("<div class='chatmessage' id='"+messageID+"'><div class='chatusername "+userroles+"'>"+username+" <div class='badge'><img src="+subIcon+"></div></div> "+completeMessage+"</div>").appendTo(".chat .main-content");
-
+        $("<div class='chatmessage' id='"+messageID+"' style='display:none'><div class='useravatar'><img src="+userAvatar+"></div><div class='chatusername "+userroles+"'>"+username+" <div class='badge'><img src="+subIcon+"></div></div><div class='messagetext'>"+completeMessage+"</div></div>").appendTo(".chat");
+        $('#'+messageID).fadeIn('fast', function() {
+          scrollCheck();
+        });
 
     } else if (eventType == "ClearMessages"){
       // If someone clears chat, then clear all messages on screen.
@@ -126,6 +131,22 @@ function chat(evt, subIcon){
       $('#'+eventMessage.id).remove();
     }
 }
+
+// Scroller
+// This will scroll to the bottom of chat unless the user scrolls up.
+function scrollCheck(){
+  var isScrolledToBottom = $('.chat')[0].scrollHeight - $('.chat')[0].clientHeight <= $('.chat')[0].scrollTop + 1;
+
+  // scroll to bottom if needed
+  if(isScrolledToBottom)
+    console.log('scrolling');
+    $('.chat')[0].scrollTop = $('.chat')[0].scrollHeight - $('.chat')[0].clientHeight;
+}
+
+
+
+
+
 
 // Start Button Pressed
 // This checks if the start button has been pressed. If so, it kicks off the chat connection.

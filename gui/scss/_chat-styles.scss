@@ -1,0 +1,22 @@
+// Default Theme
+// This is the theme the app starts on.
+.theme-default{
+    .chatmessage{
+        padding: 0% 0% 2% 0%;
+        margin: 0% 0% 2% 0%;
+        border-bottom: 1px dotted #ffffff;
+        &:last-child{
+            border-bottom:none;
+        }
+        .useravatar, .chatusername, .badge{
+            display:inline-block;
+        }
+        .useravatar{
+            width:50px;
+            border-radius: 50%;
+            img{
+                 width:100%;
+            }
+        }
+    }
+}
