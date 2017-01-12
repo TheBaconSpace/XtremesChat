@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Xtremes Chat || Xtremes.pro</title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+  </head>
+  <body>
+
+    <div id="header">
+      <div class="main-image">
+          <a href="#main-menu" class="menu-toggle menu-hamburger">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+          </a>
+      </div>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="main-menu">
+      <div class="navigation">
+        <!-- All settings go here -->
+      </div>
+      <div class="button-save-close">
+        <a href="#board-menu"><button class="board-save">Save</button></a>
+        <a href="#board-menu"><button class="board-cancel" onclick="$.sidr('close', 'board-menu');">Cancel</button></a>
+      </div>
+    </div>
+
+
+    <!-- Start Content -->
+    <div id="content">
+
+      <section class="login page current">
+        <div class="main-content">
+            <div class="streamer">
+              <div class="avatar"><img src="./images/placeholders/default.jpg" class="streamer-avatar"></div>
+              <div class="username"><h2>Streamer</h2></div>
+              <div class="loginOrOut">
+                <button class="streamer-login" status="login">Login</button>
+              </div>
+              <div class="start">
+                <a href="#" data="chat" class="navigation"><button class="start-chat">Start</button></a>
+              </div>
+            </div>
+        </div>
+      </section>
+
+      <section class="chat page">
+        <div class="main-content">
+           <!-- This is where chat will actually show up at. -->
+        </div>
+        <div class="input-container">
+          <textarea placeholder="typehere"></textarea>
+        </div>
+      </section>
+
+    </div> <!-- End Content -->
+
+    <div class="hidden" style="display:none"></div>
+  </body>
+
+  <script>
+    // Require other files here.
+    window.$ = window.jQuery = require('jquery');
+    require('./js/jquery.sidr.min.js');
+    require('./js/global.js');
+    require('./js/login.js');
+    require('./js/chat.js');
+  </script>
+</html>
